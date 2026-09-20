@@ -44,7 +44,8 @@ class MainActivity : Activity() {
     private val deviceCallback = object : MidiManager.DeviceCallback() {
         override fun onDeviceAdded(info: MidiDeviceInfo) = refreshDevices()
         override fun onDeviceRemoved(info: MidiDeviceInfo) = refreshDevices()
-        override fun onDeviceStatusChanged(status: MidiDeviceStatus) = refreshDevices()
+        // 打开或关闭端口本身也会触发此回调，不能在这里刷新并关闭当前连接。
+        override fun onDeviceStatusChanged(status: MidiDeviceStatus) = Unit
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
